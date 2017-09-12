@@ -26,9 +26,12 @@ class Point:
         else:
             raise TypeError("unsupported operand type(s) for /: '{}' and '{}'").format(self.__class__, type(other))
 
+
 class Polygon:
     def __init__(self, vertexes):
         self.vertexes = vertexes
+        self.display = None
+        self.canvas = None
 
     def __len__(self):
         return len(self.vertexes)
@@ -45,11 +48,22 @@ class Polygon:
             raise TypeError("unsupported operand type(s) for +: '{}' and '{}'").format(self.__class__, type(other))
 
     def paint(self, canvas):
+        if self.display is not None:
+            self.canvas.delete()
+
         paintable_vertexes = []
         for vertex_point in self.vertexes:
             paintable_vertexes.append(vertex_point.x)
             paintable_vertexes.append(vertex_point.y)
-        canvas.create_polygon(paintable_vertexes, fill='white', outline="red")
+
+        self.canvas = canvas
+        self.display = self.canvas.create_polygon(paintable_vertexes, fill='white', outline="red")
+
+    def clear(self):
+        if self.display is not None:
+            self.canvas.delete(self.display)
+        self.display = None
+        self.canvas = None
 
 
 class PolygonFactory:
@@ -92,11 +106,11 @@ class Route:
         self.delta = Polygon(deltas)
 
         self.steps.append(self.aligned_start)
-        for i in range(1, step_count):
-            self.steps.append(self.steps[i-1] + self.delta)
+        for i in range(1, step_count+1):
+            self.steps.append(self.steps[i - 1] + self.delta)
 
     def finished(self):
-        return self.current_step_idx == len(self.steps)-1
+        return self.current_step_idx == len(self.steps) - 1
 
     def next_step(self):
         if not self.finished():
@@ -124,13 +138,23 @@ p_from.paint(c)
 p_to = PolygonFactory.create_random(650, 650, 200, 6)
 p_to.paint(c)
 
-route = Route(p_from, p_to, 100)
+route = Route(p_from, p_to, 200)
+
 # route.paint(c)
+
+prev_polygon = None
+
+shadow = False
 
 
 def paint_move(route, canvas):
+    global prev_polygon
+    global shadow
     if not route.finished():
-        route.next_step().paint(canvas)
+        if prev_polygon is not None and not shadow:
+            prev_polygon.clear()
+        prev_polygon = route.next_step()
+        prev_polygon.paint(canvas)
         canvas.after(20, paint_move, route, canvas)
 
 
