@@ -101,4 +101,7 @@ class RectWindow:
                 result_vertexes.append(p1)
             result_vertexes.append(p2)
 
+        if not len(result_vertexes):
+            return None
+
         return domain.Polygon(result_vertexes)
