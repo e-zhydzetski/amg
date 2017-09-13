@@ -5,10 +5,10 @@ import domain
 canvas = Canvas(width=900, height=900)
 canvas.pack()
 
-p_from = domain.PolygonFactory.create_random(250, 250, 200, 5)
+p_from = domain.PolygonFactory.create_random(200, 200, 100, 5)
 p_from.paint(canvas, visible=False)
 
-p_to = domain.PolygonFactory.create_random(650, 650, 200, 6)
+p_to = domain.PolygonFactory.create_random(700, 700, 150, 6)
 p_to.paint(canvas, visible=False)
 
 route = domain.Route(p_from, p_to, 200)
@@ -24,7 +24,7 @@ window_mode = True
 
 window = None
 if window_mode:
-    window = domain.RectWindow(domain.Point(400, 400), domain.Point(600, 600))
+    window = domain.RectWindow(domain.Point(150, 400), domain.Point(750, 500))
     window.paint(canvas)
     # p1 = domain.Point(320, 700)
     # p2 = domain.Point(200, 200)
