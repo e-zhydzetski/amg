@@ -30,7 +30,7 @@ class Point:
 class Polygon:
     def __init__(self, vertexes):
         self.vertexes = vertexes
-        self.display = None
+        self.displayed_figure_id = None
         self.canvas = None
 
     def __len__(self):
@@ -47,8 +47,8 @@ class Polygon:
         else:
             raise TypeError("unsupported operand type(s) for +: '{}' and '{}'").format(self.__class__, type(other))
 
-    def paint(self, canvas):
-        if self.display is not None:
+    def paint(self, canvas, visible = True):
+        if self.displayed_figure_id is not None:
             self.canvas.delete()
 
         paintable_vertexes = []
@@ -56,13 +56,19 @@ class Polygon:
             paintable_vertexes.append(vertex_point.x)
             paintable_vertexes.append(vertex_point.y)
 
+        outline = 'gray'
+        fill = 'white'
+        if visible:
+            outline = 'black'
+            fill = 'red'
+
         self.canvas = canvas
-        self.display = self.canvas.create_polygon(paintable_vertexes, fill='white', outline="red")
+        self.displayed_figure_id = self.canvas.create_polygon(paintable_vertexes, fill=fill, outline=outline)
 
     def clear(self):
-        if self.display is not None:
-            self.canvas.delete(self.display)
-        self.display = None
+        if self.displayed_figure_id is not None:
+            self.canvas.delete(self.displayed_figure_id)
+        self.displayed_figure_id = None
         self.canvas = None
 
 
@@ -125,18 +131,15 @@ class Route:
             d = s + self.delta.vertexes[i]
             canvas.create_line(s.x, s.y, d.x, d.y, fill="red")
 
-        for step in self.steps:
-            step.paint(canvas)
 
-
-c = Canvas(width=900, height=900, bg='grey80')
+c = Canvas(width=900, height=900)
 c.pack()
 
 p_from = PolygonFactory.create_random(250, 250, 200, 5)
-p_from.paint(c)
+p_from.paint(c, visible=False)
 
 p_to = PolygonFactory.create_random(650, 650, 200, 6)
-p_to.paint(c)
+p_to.paint(c, visible=False)
 
 route = Route(p_from, p_to, 200)
 
