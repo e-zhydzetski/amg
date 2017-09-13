@@ -36,7 +36,7 @@ class Polygon:
         outline_clr = 'gray'
         fill_clr = ''
         if visible:
-            outline_clr = 'black'
+            outline_clr = ''
             fill_clr = 'red'
 
         self.canvas = canvas

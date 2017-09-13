@@ -11,7 +11,7 @@ p_from.paint(canvas, visible=False)
 p_to = domain.PolygonFactory.create_random(650, 650, 200, 6)
 p_to.paint(canvas, visible=False)
 
-route = domain.Route(p_from, p_to, 200)
+route = domain.Route(p_from, p_to, 10)
 
 # route.paint(canvas)
 
@@ -34,7 +34,7 @@ if window_mode:
     #     canvas.create_line(p1.x, p1.y, p2.x, p2.y, fill='red')
 
 
-def paint_move():
+def paint_move(pos):
     global route
     global canvas
     global cur_polygon
@@ -60,8 +60,11 @@ def paint_move():
         else:
             full_polygon.paint(canvas)
 
-        canvas.after(20, paint_move)
+        # canvas.after(20, paint_move)
 
 
-canvas.after(500, paint_move)
+# canvas.after(500, paint_move)
+
+canvas.bind("<Button-1>", paint_move)
+
 mainloop()
