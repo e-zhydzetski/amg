@@ -24,12 +24,12 @@ window_mode = True
 if window_mode:
     window = domain.RectWindow(domain.Point(300, 300), domain.Point(600, 600))
     window.paint(canvas)
-    p1 = domain.Point(320, 700)
-    p2 = domain.Point(200, 200)
-    canvas.create_line(p1.x, p1.y, p2.x, p2.y)
-    p1, p2 = window.cut_segment(p1, p2)
-    if p1 is not None:
-        canvas.create_line(p1.x, p1.y, p2.x, p2.y, fill='red')
+    # p1 = domain.Point(420, 700)
+    # p2 = domain.Point(700, 200)
+    # canvas.create_line(p1.x, p1.y, p2.x, p2.y)
+    # p1, p2 = window.cut_segment(p1, p2)
+    # if p1 is not None:
+    #     canvas.create_line(p1.x, p1.y, p2.x, p2.y, fill='red')
 
 
 def paint_move():

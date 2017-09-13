@@ -56,35 +56,30 @@ class RectWindow:
         if mark_diff & 1:
             if mark1 & 1:
                 p1, p2 = self.__cut_with_vertical_border(self.left, p1, p2)
-                mark1 = self.__calculate_mark_for_point(p1)
             else:
                 p2, p1 = self.__cut_with_vertical_border(self.left, p2, p1)
-                mark2 = self.__calculate_mark_for_point(p2)
-            mark_diff = mark1 ^ mark2
+            return self.cut_segment(p1, p2)
 
         if mark_diff & 2:
             if mark1 & 2:
                 p1, p2 = self.__cut_with_vertical_border(self.right, p1, p2)
-                mark1 = self.__calculate_mark_for_point(p1)
             else:
                 p2, p1 = self.__cut_with_vertical_border(self.right, p2, p1)
-                mark2 = self.__calculate_mark_for_point(p2)
-            mark_diff = mark1 ^ mark2
+            return self.cut_segment(p1, p2)
 
         if mark_diff & 4:
             if mark1 & 4:
                 p1, p2 = self.__cut_with_horizontal_border(self.bottom, p1, p2)
-                mark1 = self.__calculate_mark_for_point(p1)
             else:
                 p2, p1 = self.__cut_with_horizontal_border(self.bottom, p2, p1)
-                mark2 = self.__calculate_mark_for_point(p2)
-            mark_diff = mark1 ^ mark2
+            return self.cut_segment(p1, p2)
 
         if mark_diff & 8:
             if mark1 & 8:
                 p1, p2 = self.__cut_with_horizontal_border(self.top, p1, p2)
             else:
                 p2, p1 = self.__cut_with_horizontal_border(self.top, p2, p1)
+            return self.cut_segment(p1, p2)
 
         return p1, p2
 
