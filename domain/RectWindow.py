@@ -83,3 +83,20 @@ class RectWindow:
 
         return p1, p2
 
+    def cut_polygon(self, polygon):
+        result_vertexes = []
+        prev_vertex = polygon.vertexes[0]
+        if prev_vertex in self:
+            result_vertexes.append(prev_vertex)
+
+        for i in range(1, len(polygon.vertexes)):
+            p1, p2 = self.cut_segment(prev_vertex, polygon.vertexes[i])
+            if p1 is not None:
+                result_vertexes.append(p2)
+            prev_vertex = polygon.vertexes[i]
+
+        p1, p2 = self.cut_segment(prev_vertex, polygon.vertexes[0])
+        if p1 is not None:
+            result_vertexes.append(p2)
+
+        return domain.Polygon(result_vertexes)
