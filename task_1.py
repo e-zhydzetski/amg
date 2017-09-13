@@ -5,13 +5,13 @@ import domain
 canvas = Canvas(width=900, height=900)
 canvas.pack()
 
-p_from = domain.PolygonFactory.create_random(200, 200, 100, 5)
+p_from = domain.PolygonFactory.create_random(150, 150, 100, 5)
 p_from.paint(canvas, visible=False)
 
 p_to = domain.PolygonFactory.create_random(700, 700, 150, 6)
 p_to.paint(canvas, visible=False)
 
-route = domain.Route(p_from, p_to, 200)
+route = domain.Route(p_from, p_to, 300)
 
 # route.paint(canvas)
 
