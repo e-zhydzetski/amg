@@ -13,21 +13,27 @@ p_to.paint(canvas, visible=False)
 
 route = domain.Route(p_from, p_to, 200)
 
-route.paint(canvas)
+# route.paint(canvas)
 
 prev_polygon = None
 
-shadow = False
+shadow_mode = False
+
+window_mode = True
+
+if window_mode:
+    window = domain.RectWindow(domain.Point(300, 300), domain.Point(600, 600))
+    window.paint(canvas)
 
 
 def paint_move():
     global route
     global canvas
     global prev_polygon
-    global shadow
+    global shadow_mode
 
     if not route.finished():
-        if prev_polygon is not None and not shadow:
+        if prev_polygon is not None and not shadow_mode:
             prev_polygon.clear()
         prev_polygon = route.next_step()
         prev_polygon.paint(canvas)

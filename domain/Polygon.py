@@ -24,7 +24,7 @@ class Polygon:
         else:
             raise TypeError("unsupported operand type(s) for +: '{}' and '{}'").format(self.__class__, type(other))
 
-    def paint(self, canvas, visible = True):
+    def paint(self, canvas, visible=True):
         if self.displayed_figure_id is not None:
             self.canvas.delete()
 
@@ -33,14 +33,14 @@ class Polygon:
             paintable_vertexes.append(vertex_point.x)
             paintable_vertexes.append(vertex_point.y)
 
-        outline = 'gray'
-        fill = 'white'
+        outline_clr = 'gray'
+        fill_clr = ''
         if visible:
-            outline = 'black'
-            fill = 'red'
+            outline_clr = 'black'
+            fill_clr = 'red'
 
         self.canvas = canvas
-        self.displayed_figure_id = self.canvas.create_polygon(paintable_vertexes, fill=fill, outline=outline)
+        self.displayed_figure_id = self.canvas.create_polygon(paintable_vertexes, fill=fill_clr, outline=outline_clr)
 
     def clear(self):
         if self.displayed_figure_id is not None:
