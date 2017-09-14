@@ -4,7 +4,7 @@ import random
 import domain
 
 
-class Polygon:
+class Polygon(object):
     def __init__(self, vertexes):
         self.vertexes = vertexes
         self.displayed_figure_id = None
@@ -49,7 +49,7 @@ class Polygon:
         self.canvas = None
 
 
-class PolygonFactory:
+class PolygonFactory(object):
     @staticmethod
     def create_random(center_x, center_y, radius, vertex_count):
         vertexes = []

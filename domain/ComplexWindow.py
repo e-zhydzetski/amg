@@ -1,7 +1,7 @@
 import domain
 
 
-class ComplexWindow:
+class ComplexWindow(object):
     def __init__(self, windows):
         self.windows = windows
 
@@ -18,7 +18,7 @@ class ComplexWindow:
         return result_polygons
 
 
-class ComplexWindowFactory:
+class ComplexWindowFactory(object):
     @staticmethod
     def create_cross(center_x, center_y, radius, width):
         wnd1 = domain.RectWindow(

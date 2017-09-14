@@ -1,7 +1,7 @@
 import domain
 
 
-class Route:
+class Route(object):
     def __init__(self, start, finish, step_count):
         self.steps = []
         self.current_step_idx = -1

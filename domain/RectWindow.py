@@ -1,7 +1,7 @@
 import domain
 
 
-class RectWindow:
+class RectWindow(object):
     def __init__(self, tl, br):
         self.left = tl.x
         self.top = tl.y
