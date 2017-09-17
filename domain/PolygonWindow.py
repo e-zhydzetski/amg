@@ -2,14 +2,12 @@ import domain
 
 
 class PolygonWindow(object):
-    def __init__(self, vertexes, canvas):
+    def __init__(self, vertexes):
         self.vertexes = vertexes
         self.segments = []
         for i in range(0, len(self.vertexes)):
             segment = domain.Segment(self.vertexes[i - 1], self.vertexes[i])
             self.segments.append(segment)
-
-        self.canvas = canvas
 
     def paint(self, canvas):
         canvas_vertexes = []
@@ -47,11 +45,13 @@ class PolygonWindow(object):
             else:
                 t = - Q / P
                 if 1 >= t >= 0:
-                    intersection = True
-                    if P < 0:
-                        t2 = min(t, t2)
-                    else:
-                        t1 = max(t, t1)
+                    p = p1 + (p2 - p1) * t
+                    if p in ws:
+                        intersection = True
+                        if P < 0:
+                            t2 = min(t, t2)
+                        else:
+                            t1 = max(t, t1)
 
         if t2 > 1 and (intersection or p1_inside):
             t2 = 1
@@ -64,8 +64,6 @@ class PolygonWindow(object):
 
         new_p1 = p1 + (p2 - p1) * t1
         new_p2 = p1 + (p2 - p1) * t2
-
-        # self.canvas.create_line(new_p1.x, new_p1.y, new_p2.x, new_p2.y, fill="red")
 
         return new_p1, new_p2
 

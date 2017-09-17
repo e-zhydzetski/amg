@@ -30,7 +30,7 @@ if window_mode == 2:
         domain.Point(450, 350),
         domain.Point(550, 550),
         domain.Point(350, 550)
-    ], canvas)
+    ])
 
 if window:
     window.paint(canvas)
@@ -64,12 +64,12 @@ def paint_move(pos=None):
         else:
             full_polygon.paint(canvas)
 
-        # canvas.after(20, paint_move)
+        canvas.after(20, paint_move)
 
 
-# canvas.after(500, paint_move)
+canvas.after(500, paint_move)
 
-canvas.bind("<Button-1>", paint_move)
+# canvas.bind("<Button-1>", paint_move)
 
 p1 = None
 def add_point(pos):
