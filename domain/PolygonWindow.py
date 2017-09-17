@@ -32,21 +32,21 @@ class PolygonWindow(object):
         for ws in self.segments:
             wsn = ws.normal
             P = (p2 - p1) * wsn
-            Q = (p2 - ws.p1) * wsn
+            Q = (p1 - ws.p1) * wsn
             if P == 0:
                 if Q < 0:
                     return None, None
                 else:
                     pass
             else:
-                t = 1 - Q / P
+                t = - Q / P
                 if 1 >= t >= 0:
                     if P < 0:
                         t2 = min(t, t2) if t2 else t
                     else:
                         t1 = max(t, t1) if t1 else t
 
-        if not t1 and not t2:
+        if not t1 or not t2:
             return None, None
 
         if not t1:
