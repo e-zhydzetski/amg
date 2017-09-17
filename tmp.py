@@ -1,49 +1,81 @@
-from tkinter import *
-
-c = Canvas(width=460, height=460, bg='grey80')
-c.pack()
-
-oval = c.create_oval(30, 10, 130, 80, fill="orange")
-c.create_rectangle(180, 10, 280, 80, tag="rect", fill="lightgreen")
-trian = c.create_polygon(330, 80, 380, 10, 430, 80, fill='white', outline="red")
+mult = lambda a, b: a.x * b.x + a.y * b.y
 
 
-def oval_func(event):
-    c.delete(oval)
-    c.create_text(30, 10, text="Здесь был круг", anchor="w")
+class Point(object):
+    def __init__(self, x, y):
+        self.x = float(x)
+        self.y = float(y)
+
+    def __str__(self):
+        return "(" + str(self.x) + ";" + str(self.y) + ")"
 
 
-def rect_func(event):
-    c.delete("rect")
-    c.create_text(180, 10, text="Здесь был\nпрямоугольник", anchor="nw")
+class Line(object):
+    def __init__(self, begin, end):
+        self.begin = begin
+        self.end = end
+
+    @property
+    def direction(self):
+        return Point(self.end.x - self.begin.x, self.end.y - self.begin.y)
+
+    @property
+    def normal(self):
+        return Point(self.end.y - self.begin.y, self.begin.x - self.end.x)
+
+    def __str__(self):
+        return "[" + str(self.begin) + ", " + str(self.end) + "]"
 
 
-def triangle(event):
-    c.create_polygon(350, 70, 380, 20, 410, 70, fill='yellow', outline="black")
+class Polygon(object):
+    def __init__(self, points):
+        self.count = len(points)
+        self.edges = []
+        for i in range(self.count - 1):
+            self.edges.append(Line(points[i], points[i + 1]))
+
+        self.edges.append(Line(points[-1], points[0]))
+
+    # Реализаця алгоритма!
+    def cyruse_beck(self, l):
+        t_begin = 0.0
+        t_end = 1.0
+        dirL = l.direction
+        for edge in self.edges:
+            dir_edg = edge.direction
+            Q = Point(l.begin.x - dir_edg.x, l.begin.y - dir_edg.y)
+            N = edge.normal
+            Pn = mult(dirL, N)
+            Qn = mult(Q, N)
+            if Pn == 0:
+                pass
+            else:
+                t = -Qn / Pn
+                if Pn > 0:
+                    if t < t_begin:
+                        return False
+                    t_end = min(t_end, t)
+                else:
+                    if t > t_end:
+                        return False
+                    t_begin = max(t_begin, t)
+
+        if t_end > t_begin:
+            if t_begin > 0:
+                l.begin = Point(l.begin.x + t_begin * dirL.x, l.begin.y + t_begin * dirL.y)
+            if t_end < 1:
+                l.end = Point(l.begin.x + t_end * dirL.x, l.begin.y + t_end * dirL.y)
+        else:
+            return False
+        return True
 
 
-c.tag_bind(oval, '<Button-1>', oval_func)
-c.tag_bind("rect", '<Button-1>', rect_func)
-c.tag_bind(trian, '<Button-1>', triangle)
-
-
-def reset_figures():
-    global oval
-    global trian
-    c.delete(oval)
-    oval = c.create_oval(30, 10, 130, 80, fill="orange")
-    c.tag_bind(oval, '<Button-1>', oval_func)
-    c.delete("rect")
-    c.create_rectangle(180, 10, 280, 80, tag="rect", fill="lightgreen")
-    c.tag_bind("rect", '<Button-1>', rect_func)
-    c.delete(trian)
-    trian = c.create_polygon(330, 80, 380, 10, 430, 80, fill='white', outline="red")
-    c.tag_bind(trian, '<Button-1>', triangle)
-    c.after(1000, reset_figures)
-    
-
-reset_figures()
-
-c.after(1000, reset_figures)
-
-mainloop()
+p = Polygon([Point(0, 0), Point(2, 0), Point(2, 2), Point(0, 2)])
+l = Line(Point(-0.5, -0.5), Point(2.5, 2.5))
+print(p.cyruse_beck(l))
+print("Line: %s" % l)
+l = Line(Point(-0.5, -0.5), Point(2.5, -0.5))
+print(p.cyruse_beck(l))
+l = Line(Point(0, -1), Point(3, 2))
+print(p.cyruse_beck(l))
+print("Line: %s" % l)

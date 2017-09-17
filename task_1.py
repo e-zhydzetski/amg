@@ -20,11 +20,25 @@ visible_polygon_parts = None
 
 shadow_mode = False
 
-window_mode = True
+window_mode = 2
 
 window = None
-if window_mode:
+if window_mode == 1:
     window = domain.ComplexWindowFactory.create_cross(450, 450, 300, 100)
+if window_mode == 2:
+    window = domain.PolygonWindow([
+        domain.Point(450, 350),
+        domain.Point(550, 550),
+        domain.Point(350, 550)
+    ], canvas)
+    p1 = domain.Point(500, 600)
+    p2 = domain.Point(650, 540)
+    canvas.create_line(p1.x, p1.y, p2.x, p2.y)
+    p1, p2 = window.cut_segment(p1, p2)
+    if p1 is not None:
+        canvas.create_line(p1.x, p1.y, p2.x, p2.y, fill="red")
+
+if window:
     window.paint(canvas)
 
 
