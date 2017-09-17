@@ -12,9 +12,9 @@ class ComplexWindow(object):
     def cut_polygon(self, polygon):
         result_polygons = []
         for wnd in self.windows:
-            result_polygon = wnd.cut_polygon(polygon)
-            if result_polygon:
-                result_polygons.append(result_polygon)
+            simple_polygons = wnd.cut_polygon(polygon)
+            if simple_polygons:
+                result_polygons.extend(simple_polygons)
         return result_polygons
 
 
