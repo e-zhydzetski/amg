@@ -17,13 +17,6 @@ class PolygonWindow(object):
 
         canvas.create_polygon(canvas_vertexes, fill="", outline="gray")
 
-        for segment in self.segments:
-            norm_segment = domain.Segment(segment.p1, segment.p1 + segment.normal)
-
-            canvas.create_line(norm_segment.p1.x, norm_segment.p1.y, norm_segment.p2.x, norm_segment.p2.y)
-            canvas.create_oval(norm_segment.p2.x - 2, norm_segment.p2.y - 2, norm_segment.p2.x + 2,
-                               norm_segment.p2.y + 2)
-
     def cut_segment(self, p1, p2):
         intersection = False  # crutch
         p1_inside = True  # crutch
