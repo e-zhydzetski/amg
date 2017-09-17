@@ -30,3 +30,22 @@ class ComplexWindowFactory(object):
             domain.Point(center_x + width // 2, center_y + radius)
         )
         return ComplexWindow([wnd1, wnd2])
+
+    @staticmethod
+    def create_3pyramid(center_x, center_y, radius):
+        top = domain.PolygonWindow([
+            domain.Point(center_x, center_y - radius),
+            domain.Point(center_x + radius // 2, center_y),
+            domain.Point(center_x - radius // 2, center_y)
+        ])
+        left = domain.PolygonWindow([
+            domain.Point(center_x - radius // 2, center_y),
+            domain.Point(center_x, center_y + radius),
+            domain.Point(center_x - radius, center_y + radius)
+        ])
+        right = domain.PolygonWindow([
+            domain.Point(center_x + radius // 2, center_y),
+            domain.Point(center_x + radius, center_y + radius),
+            domain.Point(center_x, center_y + radius)
+        ])
+        return ComplexWindow([top, left, right])

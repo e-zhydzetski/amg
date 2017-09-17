@@ -26,11 +26,7 @@ window = None
 if window_mode == 1:
     window = domain.ComplexWindowFactory.create_cross(450, 450, 300, 100)
 if window_mode == 2:
-    window = domain.PolygonWindow([
-        domain.Point(450, 350),
-        domain.Point(550, 550),
-        domain.Point(350, 550)
-    ])
+    window = domain.ComplexWindowFactory.create_3pyramid(450, 450, 150)
 
 if window:
     window.paint(canvas)
