@@ -25,8 +25,8 @@ class PolygonWindow(object):
                                norm_segment.p2.y + 2)
 
     def cut_segment(self, p1, p2):
-        intersection = False
-        p1_inside = True
+        intersection = False  # crutch
+        p1_inside = True  # crutch
         t1 = -1
         t2 = 2
         for ws in self.segments:
@@ -45,8 +45,8 @@ class PolygonWindow(object):
             else:
                 t = - Q / P
                 if 1 >= t >= 0:
-                    p = p1 + (p2 - p1) * t
-                    if p in ws:
+                    p = p1 + (p2 - p1) * t  # crutch
+                    if p in ws:  # crutch
                         intersection = True
                         if P < 0:
                             t2 = min(t, t2)
