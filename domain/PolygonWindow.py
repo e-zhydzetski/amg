@@ -27,12 +27,18 @@ class PolygonWindow(object):
                                norm_segment.p2.y + 2)
 
     def cut_segment(self, p1, p2):
-        t1 = None
-        t2 = None
+        intersection = False
+        p1_inside = True
+        t1 = -1
+        t2 = 2
         for ws in self.segments:
             wsn = ws.normal
             P = (p2 - p1) * wsn
             Q = (p1 - ws.p1) * wsn
+
+            if Q < 0:
+                p1_inside = False
+
             if P == 0:
                 if Q < 0:
                     return None, None
@@ -41,21 +47,19 @@ class PolygonWindow(object):
             else:
                 t = - Q / P
                 if 1 >= t >= 0:
+                    intersection = True
                     if P < 0:
-                        t2 = min(t, t2) if t2 else t
+                        t2 = min(t, t2)
                     else:
-                        t1 = max(t, t1) if t1 else t
+                        t1 = max(t, t1)
 
-        if not t1 or not t2:
-            return None, None
-
-        if not t1:
-            t1 = 0
-
-        if not t2:
+        if t2 > 1 and (intersection or p1_inside):
             t2 = 1
 
-        if t1 > t2:
+        if t1 < 0 and (intersection or p1_inside):
+            t1 = 0
+
+        if t1 < 0 and t2 > 1 or t1 > t2:
             return None, None
 
         new_p1 = p1 + (p2 - p1) * t1
