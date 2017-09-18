@@ -8,7 +8,7 @@ canvas.pack()
 p_from = domain.PolygonFactory.create_random(150, 150, 100, 5)
 p_from.paint(canvas, visible=False)
 
-p_to = domain.PolygonFactory.create_random(700, 700, 150, 6)
+p_to = domain.PolygonFactory.create_random(700, 700, 100, 6)
 p_to.paint(canvas, visible=False)
 
 route = domain.Route(p_from, p_to, 300)
@@ -18,7 +18,7 @@ route = domain.Route(p_from, p_to, 300)
 full_polygon = None
 visible_polygon_parts = None
 
-shadow_mode = False
+shadow_mode = True
 
 window_mode = 2
 
@@ -26,7 +26,7 @@ window = None
 if window_mode == 1:
     window = domain.ComplexWindowFactory.create_cross(450, 450, 300, 100)
 if window_mode == 2:
-    window = domain.ComplexWindowFactory.create_3pyramid(450, 450, 150)
+    window = domain.ComplexWindowFactory.create_3pyramid(400, 350, 200)
 
 if window:
     window.paint(canvas)
