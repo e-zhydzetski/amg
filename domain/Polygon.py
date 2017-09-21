@@ -2,6 +2,7 @@ import math
 import random
 
 import domain
+import settings
 
 
 class Polygon(object):
@@ -33,11 +34,11 @@ class Polygon(object):
             paintable_vertexes.append(vertex_point.x)
             paintable_vertexes.append(vertex_point.y)
 
-        outline_clr = 'gray'
-        fill_clr = ''
+        outline_clr = settings.invisible_border_color
+        fill_clr = settings.invisible_color
         if visible:
-            outline_clr = ''
-            fill_clr = 'red'
+            outline_clr = settings.visible_border_color
+            fill_clr = settings.visible_color
 
         self.canvas = canvas
         self.displayed_figure_id = self.canvas.create_polygon(paintable_vertexes, fill=fill_clr, outline=outline_clr)

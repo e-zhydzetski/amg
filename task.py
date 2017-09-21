@@ -1,12 +1,9 @@
 from tkinter import *
 
 import domain
+import settings
 
-# settings
-shadow_mode = False
-window_mode = 1
-
-canvas = Canvas(width=900, height=900, bg=window_mode and 'lightblue' or 'white')
+canvas = Canvas(width=900, height=900, bg=settings.window_mode and settings.invisible_background_color or settings.visible_background_color)
 canvas.pack()
 
 p_from = domain.PolygonFactory.create_random(150, 150, 100, 5)
@@ -21,9 +18,9 @@ full_polygon = None
 visible_polygon_parts = None
 
 window = None
-if window_mode == 1:
+if settings.window_mode == 1:
     window = domain.ComplexWindowFactory.create_cross(450, 450, 300, 100)
-if window_mode == 2:
+if settings.window_mode == 2:
     window = domain.ComplexWindowFactory.create_3pyramid(400, 350, 200)
 
 if window:
@@ -35,11 +32,10 @@ def paint_move(pos=None):
     global canvas
     global visible_polygon_parts
     global full_polygon
-    global shadow_mode
     global window
 
     if not route.finished():
-        if not shadow_mode:
+        if not settings.shadow_mode:
             if full_polygon is not None:
                 full_polygon.clear()
                 full_polygon = None
@@ -50,11 +46,11 @@ def paint_move(pos=None):
 
         full_polygon = route.next_step()
 
-        if window_mode:
+        if settings.window_mode:
             visible_polygon_parts = window.cut_polygon(full_polygon)
+            full_polygon.paint(canvas, visible=False)
             for vpp in visible_polygon_parts:
                 vpp.paint(canvas)
-            full_polygon.paint(canvas, visible=False)
         else:
             full_polygon.paint(canvas)
 
@@ -64,23 +60,5 @@ def paint_move(pos=None):
 canvas.after(500, paint_move)
 
 # canvas.bind("<Button-1>", paint_move)
-
-p1 = None
-
-
-def add_point(pos):
-    global p1
-    p = domain.Point(pos.x, pos.y)
-    if p1:
-        canvas.create_line(p1.x, p1.y, p.x, p.y)
-        p1, p = window.cut_segment(p1, p)
-        if p1 is not None:
-            canvas.create_line(p1.x, p1.y, p.x, p.y, fill="red")
-        p1 = None
-    else:
-        p1 = p
-
-
-canvas.bind("<Button-3>", add_point)
 
 mainloop()

@@ -41,5 +41,3 @@ class Route(object):
             s = self.start_vertexes[i]
             f = self.finish_vertexes[i]
             canvas.create_line(s.x, s.y, f.x, f.y)
-            d = s + self.delta.vertexes[i]
-            canvas.create_line(s.x, s.y, d.x, d.y, fill="red")

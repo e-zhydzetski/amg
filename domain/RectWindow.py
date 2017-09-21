@@ -1,4 +1,5 @@
 import domain
+import settings
 
 
 class RectWindow(object):
@@ -15,7 +16,7 @@ class RectWindow(object):
             raise TypeError("unsupported operand type for in, should be Point")
 
     def paint(self, canvas):
-        canvas.create_rectangle(self.left, self.top, self.right, self.bottom, fill="white", outline="")
+        canvas.create_rectangle(self.left, self.top, self.right, self.bottom, fill=settings.visible_background_color, outline="")
 
     def __calculate_mark_for_point(self, p):
         mark = 0
