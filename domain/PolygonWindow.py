@@ -15,7 +15,7 @@ class PolygonWindow(object):
             canvas_vertexes.append(vertex_point.x)
             canvas_vertexes.append(vertex_point.y)
 
-        canvas.create_polygon(canvas_vertexes, fill="", outline="gray")
+        canvas.create_polygon(canvas_vertexes, fill="white", outline="")
 
     def cut_segment(self, p1, p2):
         intersection = False  # crutch

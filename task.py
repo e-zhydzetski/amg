@@ -2,7 +2,11 @@ from tkinter import *
 
 import domain
 
-canvas = Canvas(width=900, height=900)
+# settings
+shadow_mode = False
+window_mode = 1
+
+canvas = Canvas(width=900, height=900, bg=window_mode and 'lightblue' or 'white')
 canvas.pack()
 
 p_from = domain.PolygonFactory.create_random(150, 150, 100, 5)
@@ -13,14 +17,8 @@ p_to.paint(canvas, visible=False)
 
 route = domain.Route(p_from, p_to, 300)
 
-# route.paint(canvas)
-
 full_polygon = None
 visible_polygon_parts = None
-
-shadow_mode = True
-
-window_mode = 2
 
 window = None
 if window_mode == 1:
@@ -68,6 +66,8 @@ canvas.after(500, paint_move)
 # canvas.bind("<Button-1>", paint_move)
 
 p1 = None
+
+
 def add_point(pos):
     global p1
     p = domain.Point(pos.x, pos.y)
