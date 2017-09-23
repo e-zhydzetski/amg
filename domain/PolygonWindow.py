@@ -18,6 +18,14 @@ class PolygonWindow(object):
 
         canvas.create_polygon(canvas_vertexes, fill=settings.visible_background_color, outline="")
 
+    def is_convex(self):
+        for segment in self.segments:
+            sn = segment.normal
+            for vertex in self.vertexes:
+                if (vertex - segment.p1) * sn < 0:
+                    return False
+        return True
+
     def cut_segment(self, p1, p2):
         intersection = False  # crutch
         p1_inside = True  # crutch
@@ -88,9 +96,9 @@ class PolygonWindow(object):
         result_polygons = self.do_cut_polygon(polygon)
 
         polygon_window = domain.PolygonWindow(polygon.vertexes)
-        window_polygon = domain.Polygon(self.vertexes)
-
-        result_polygons.extend(polygon_window.do_cut_polygon(window_polygon))
+        if polygon_window.is_convex():
+            window_polygon = domain.Polygon(self.vertexes)
+            result_polygons.extend(polygon_window.do_cut_polygon(window_polygon))
 
         return result_polygons
 
