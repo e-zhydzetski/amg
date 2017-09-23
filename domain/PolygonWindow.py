@@ -61,7 +61,7 @@ class PolygonWindow(object):
 
         return new_p1, new_p2
 
-    def cut_polygon(self, polygon):
+    def do_cut_polygon(self, polygon):
         result_vertexes = []
         prev_vertex = polygon.vertexes[0]
 
@@ -83,3 +83,15 @@ class PolygonWindow(object):
             return []
 
         return [domain.Polygon(result_vertexes)]
+
+    def cut_polygon(self, polygon):
+        result_polygons = self.do_cut_polygon(polygon)
+
+        polygon_window = domain.PolygonWindow(polygon.vertexes)
+        window_polygon = domain.Polygon(self.vertexes)
+
+        result_polygons.extend(polygon_window.do_cut_polygon(window_polygon))
+
+        return result_polygons
+
+

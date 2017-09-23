@@ -15,7 +15,7 @@ class Route(object):
             start_idx = i % len(start.vertexes)
             self.start_vertexes.append(start.vertexes[start_idx])
             finish_idx = i % len(finish.vertexes)
-            self.finish_vertexes.append(finish.vertexes[-finish_idx])
+            self.finish_vertexes.append(finish.vertexes[finish_idx])
 
         self.aligned_start = domain.Polygon(self.start_vertexes)
 
