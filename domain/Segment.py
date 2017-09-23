@@ -9,7 +9,8 @@ class Segment(object):
     def __contains__(self, point):
         if isinstance(point, domain.Point):
             return abs((point.x - self.p1.x) * (self.p2.y - self.p1.y) - (self.p2.x - self.p1.x) * (point.y - self.p1.y)) < 1 \
-                   and min(self.p1.x, self.p2.x) <= point.x <= max(self.p1.x, self.p2.x)
+                   and min(self.p1.x, self.p2.x) <= point.x <= max(self.p1.x, self.p2.x) \
+                   and min(self.p1.y, self.p2.y) <= point.y <= max(self.p1.y, self.p2.y)
         else:
             raise TypeError("unsupported operand type for in, should be Point")
 
